@@ -5,7 +5,7 @@ console.log(encoded, translations)
 
 const decodeArray = (array, cipher) => {
     const ans = [];
-    const uniq = [];
+    const uniq = new Set();
     array.forEach(object => {
         let tempObj = {...object};
         for (let [key, val] of Object.entries(object)) {
@@ -13,14 +13,14 @@ const decodeArray = (array, cipher) => {
                 tempObj[key] = cipher[val]
             } else {
                 if (/Id$/.test(key)) {
-                    uniq.push(key)
+                    uniq.add(key)
                 }
             }
         }
         ans.push(tempObj);
     })
 
-    return ans.concat([...new Set(uniq)]);
+    return [...ans, [...uniq]];
 }
 const decoded = decodeArray(encoded, translations)
 
